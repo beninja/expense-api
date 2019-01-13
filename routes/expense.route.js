@@ -38,17 +38,26 @@ module.exports = function(server) {
    * LIST
    */
   server.get('/expenses', (req, res, next) => {
-    Expense.find({}, function(err, docs) {
-      if (err) {
+    const limit = req.query.limit ? parseInt(req.query.limit) : 100;
+    const offset = req.query.offset ? parseInt(req.query.offset) : 0;
+    Expense.find({})
+      .populate('_type')
+      .limit(limit)
+      .skip(offset)
+      .sort({
+        createdAt: -1
+      })
+      .then((docs) => {
+        res.send(docs);
+        next();
+      },
+      (err) => {
         console.error(err);
         return next(
           new errors.InvalidContentError(err.errors.name.message),
         );
       }
-
-      res.send(docs);
-      next();
-    });
+    );
   });
 
   /**

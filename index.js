@@ -6,10 +6,14 @@ const config = require('./config');
 const restify = require('restify');
 const mongoose = require('mongoose');
 const restifyPlugins = require('restify-plugins');
+const corsMiddleware = require('restify-cors-middleware');
 const Expense = require('./models/expense');
 const CronJob = require('cron').CronJob;
 const moment = require('moment');
-
+const cors = corsMiddleware({
+  preflightMaxAge: 5, //Optional
+  origins: ['*']
+})
 /**
   * Initialize Server
   */
@@ -17,6 +21,9 @@ const server = restify.createServer({
 	name: config.name,
 	version: config.version,
 });
+
+server.pre(cors.preflight)
+server.use(cors.actual)
 
 /**
   * Middleware

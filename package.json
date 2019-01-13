@@ -5,23 +5,23 @@
   "main": "index.js",
   "dependencies": {
     "cron": "^1.6.0",
-    "moment": "^2.23.0",
+    "dotenv": "^6.2.0",
     "mongoose": "^5.4.3",
     "mongoose-string-query": "^0.2.5",
     "mongoose-timestamp": "^0.6.0",
     "npm": "^6.5.0",
     "restify": "^7.5.0",
+    "restify-cors-middleware": "^1.1.1",
     "restify-errors": "^6.1.1",
     "restify-plugins": "^1.6.0"
   },
   "devDependencies": {
-    "dotenv": "^6.2.0",
     "nodemon": "^1.18.9"
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node index.js",
-    "start-dev": "./node_modules/nodemon/nodemon.js index.js"
+    "start-dev": "ENV='developpement' ./node_modules/nodemon/bin/nodemon.js index.js"
   },
   "author": "Benjamin Roullet",
   "license": "ISC"
